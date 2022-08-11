@@ -7,20 +7,25 @@
 
 import UIKit
 
-class EmployeeListTableVC: UITableViewController {
+protocol EmployeeListTableViewProtocol: AnyObject {
+    func refreshEmployeeList(with data: [Employee])
+}
+
+final class EmployeeListTableVC: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
+    private var presenter: EmploeeListPresenterProtocol!
+    private var employees: [Employee]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter = EmploeeListPresenter(view: self)
+        
         setupSearchController()
+        fetchEmployeeData()
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -102,6 +107,10 @@ extension EmployeeListTableVC {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
+    
+    func fetchEmployeeData() {
+        presenter.fetachEmployeeData()
+    }
 }
 
 //MARK: - UISearchResultsUpdating
@@ -112,10 +121,21 @@ extension EmployeeListTableVC: UISearchResultsUpdating {
     }
 }
 
-//MARK: -
+//MARK: - UISearchBarDelegate
 
 extension EmployeeListTableVC: UISearchBarDelegate {
-    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        print("searchBarBookmarkButtonClicked")
+    }
 }
 
+
+//MARK: - EmployeeListTableViewProtocol
+
+extension EmployeeListTableVC: EmployeeListTableViewProtocol {
+    func refreshEmployeeList(with data: [Employee]) {
+        tableView.reloadData()
+        
+    }
+}
 
