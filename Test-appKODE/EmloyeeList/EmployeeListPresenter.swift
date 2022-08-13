@@ -21,13 +21,9 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
     
    @MainActor func fetachEmployeeData(){
        Task {
-           sleep(2)
-           let employees = await NetworkManager.shared.fetchEmployeeData(
-                   from: "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
-               )
-           view.refreshEmployeeList(with: employees)
+           await DataManager.shared.fetchEmploees()
+           view.refreshEmployeeList()
        }
-       print("Hello")
     }
 }
 

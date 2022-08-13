@@ -19,6 +19,9 @@
 		6A3483A928A4315C008FA1AA /* EmployeeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483A828A4315C008FA1AA /* EmployeeModel.swift */; };
 		6A3483AB28A43317008FA1AA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483AA28A43317008FA1AA /* NetworkManager.swift */; };
 		6A3483AE28A4374A008FA1AA /* EmployeeListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */; };
+		6A97D84B28A524900092F781 /* EmployeeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D84928A524900092F781 /* EmployeeTableViewCell.swift */; };
+		6A97D84C28A524900092F781 /* EmployeeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A97D84A28A524900092F781 /* EmployeeTableViewCell.xib */; };
+		6A97D84E28A5444C0092F781 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D84D28A5444C0092F781 /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		6A3483A828A4315C008FA1AA /* EmployeeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeModel.swift; sourceTree = "<group>"; };
 		6A3483AA28A43317008FA1AA /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListPresenter.swift; sourceTree = "<group>"; };
+		6A97D84928A524900092F781 /* EmployeeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeTableViewCell.swift; sourceTree = "<group>"; };
+		6A97D84A28A524900092F781 /* EmployeeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmployeeTableViewCell.xib; sourceTree = "<group>"; };
+		6A97D84D28A5444C0092F781 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +114,12 @@
 				6A34837528A405E2008FA1AA /* AppDelegate.swift */,
 				6A34837728A405E2008FA1AA /* SceneDelegate.swift */,
 				6A3483A828A4315C008FA1AA /* EmployeeModel.swift */,
+				6A3483AC28A433A4008FA1AA /* Service Layer */,
 				6A3483A728A4310C008FA1AA /* EmloyeeList */,
 				6A34837B28A405E2008FA1AA /* Main.storyboard */,
 				6A34837E28A405E3008FA1AA /* Assets.xcassets */,
 				6A34838028A405E3008FA1AA /* LaunchScreen.storyboard */,
 				6A34838328A405E3008FA1AA /* Info.plist */,
-				6A3483AC28A433A4008FA1AA /* Service Layer */,
 			);
 			path = "Test-appKODE";
 			sourceTree = "<group>";
@@ -140,6 +146,7 @@
 			children = (
 				6A3483A528A426D5008FA1AA /* EmployeeListTableVC.swift */,
 				6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */,
+				6A3483B328A522BE008FA1AA /* TableViewCell */,
 			);
 			path = EmloyeeList;
 			sourceTree = "<group>";
@@ -148,8 +155,18 @@
 			isa = PBXGroup;
 			children = (
 				6A3483AA28A43317008FA1AA /* NetworkManager.swift */,
+				6A97D84D28A5444C0092F781 /* DataManager.swift */,
 			);
 			path = "Service Layer";
+			sourceTree = "<group>";
+		};
+		6A3483B328A522BE008FA1AA /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6A97D84928A524900092F781 /* EmployeeTableViewCell.swift */,
+				6A97D84A28A524900092F781 /* EmployeeTableViewCell.xib */,
+			);
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A34838228A405E3008FA1AA /* LaunchScreen.storyboard in Resources */,
+				6A97D84C28A524900092F781 /* EmployeeTableViewCell.xib in Resources */,
 				6A34837F28A405E3008FA1AA /* Assets.xcassets in Resources */,
 				6A34837D28A405E2008FA1AA /* Main.storyboard in Resources */,
 			);
@@ -284,6 +302,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A3483A628A426D5008FA1AA /* EmployeeListTableVC.swift in Sources */,
+				6A97D84E28A5444C0092F781 /* DataManager.swift in Sources */,
+				6A97D84B28A524900092F781 /* EmployeeTableViewCell.swift in Sources */,
 				6A34837628A405E2008FA1AA /* AppDelegate.swift in Sources */,
 				6A3483AB28A43317008FA1AA /* NetworkManager.swift in Sources */,
 				6A34837828A405E2008FA1AA /* SceneDelegate.swift in Sources */,

@@ -21,4 +21,8 @@ struct Employee: Decodable {
     let position: String
     let birthday: String
     let phone: String
+    
+    var fullName: String {
+        firstName + " " + lastName
+    }
 }

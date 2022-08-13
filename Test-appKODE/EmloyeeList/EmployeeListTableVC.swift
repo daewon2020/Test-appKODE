@@ -8,85 +8,81 @@
 import UIKit
 
 protocol EmployeeListTableViewProtocol: AnyObject {
-    func refreshEmployeeList(with data: [Employee])
+    func refreshEmployeeList()
 }
 
 final class EmployeeListTableVC: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var presenter: EmploeeListPresenterProtocol!
-    private var employees: [Employee]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         presenter = EmploeeListPresenter(view: self)
+        tableView.register(
+            UINib(
+                nibName: "EmployeeTableViewCell",
+                bundle: nil
+            ),
+            forCellReuseIdentifier: "employeeCellID"
+        )
         
         setupSearchController()
         fetchEmployeeData()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        DataManager.shared.employees.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "employeeCellID",
+            for: indexPath
+        ) as? EmployeeTableViewCell else { return UITableViewCell() }
+        
+        let employee = DataManager.shared.employees[indexPath.row]
+        let mainText = NSMutableAttributedString()
+        mainText.append(NSAttributedString(string: employee.fullName))
+        mainText.append(
+            NSMutableAttributedString(
+                string: " " + employee.userTag.lowercased(),
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1),
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
+                ]
+            )
+        )
+        cell.cellMainText.attributedText = mainText
+        cell.cellSubtitle.text = employee.position
+        cell.cellImage.backgroundColor = #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1)
+        cell.cellImage.layer.cornerRadius = cell.cellImage.frame.height / 2
+        
+        Task {
+            if let image = await DataManager.shared.getEmploeeAvatar(from: employee.avatarUrl) {
+                await MainActor.run {
+                    cell.cellImage.image = image
+                }
+            }
+        }
 
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        78.0
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
-
+    
+    
 }
 
 //MARK: - private func
@@ -129,13 +125,12 @@ extension EmployeeListTableVC: UISearchBarDelegate {
     }
 }
 
-
 //MARK: - EmployeeListTableViewProtocol
 
 extension EmployeeListTableVC: EmployeeListTableViewProtocol {
-    func refreshEmployeeList(with data: [Employee]) {
+    func refreshEmployeeList() {
         tableView.reloadData()
-        
+        print(DataManager.shared.employees.count)
     }
 }
 
