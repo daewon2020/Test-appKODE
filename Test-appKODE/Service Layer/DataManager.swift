@@ -36,4 +36,9 @@ class DataManager {
         }
         return nil
     }
+    
+    func clearData() {
+        employees.removeAll()
+        avatars.removeAllObjects()
+    }
 }

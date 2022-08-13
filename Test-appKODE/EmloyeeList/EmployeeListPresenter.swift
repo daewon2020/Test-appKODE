@@ -10,6 +10,8 @@ import Foundation
 protocol EmploeeListPresenterProtocol: AnyObject {
     init(view: EmployeeListTableViewProtocol)
     func fetachEmployeeData()
+    func getEmployeeCount() -> Int
+    func getEmployee(for indexPath: IndexPath) -> Employee?
 }
 
 class EmploeeListPresenter: EmploeeListPresenterProtocol {
@@ -19,8 +21,18 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
         self.view = view
     }
     
+    func getEmployeeCount() -> Int {
+        DataManager.shared.employees.count
+    }
+    
+    func getEmployee(for indexPath: IndexPath) -> Employee? {
+        getEmployeeCount() == 0 ? nil : DataManager.shared.employees[indexPath.row]
+    }
+    
    @MainActor func fetachEmployeeData(){
+       DataManager.shared.clearData()
        Task {
+           sleep(2)
            await DataManager.shared.fetchEmploees()
            view.refreshEmployeeList()
        }

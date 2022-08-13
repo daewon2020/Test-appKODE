@@ -14,19 +14,12 @@ protocol EmployeeListTableViewProtocol: AnyObject {
 final class EmployeeListTableVC: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var presenter: EmploeeListPresenterProtocol!
+    private var cellCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         presenter = EmploeeListPresenter(view: self)
-        tableView.register(
-            UINib(
-                nibName: "EmployeeTableViewCell",
-                bundle: nil
-            ),
-            forCellReuseIdentifier: "employeeCellID"
-        )
-        
+        setupTableView()
         setupSearchController()
         fetchEmployeeData()
     }
@@ -34,7 +27,7 @@ final class EmployeeListTableVC: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        DataManager.shared.employees.count
+        cellCount == 0 ? 10 : cellCount
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -43,30 +36,7 @@ final class EmployeeListTableVC: UITableViewController {
             for: indexPath
         ) as? EmployeeTableViewCell else { return UITableViewCell() }
         
-        let employee = DataManager.shared.employees[indexPath.row]
-        let mainText = NSMutableAttributedString()
-        mainText.append(NSAttributedString(string: employee.fullName))
-        mainText.append(
-            NSMutableAttributedString(
-                string: " " + employee.userTag.lowercased(),
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1),
-                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
-                ]
-            )
-        )
-        cell.cellMainText.attributedText = mainText
-        cell.cellSubtitle.text = employee.position
-        cell.cellImage.backgroundColor = #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1)
-        cell.cellImage.layer.cornerRadius = cell.cellImage.frame.height / 2
-        
-        Task {
-            if let image = await DataManager.shared.getEmploeeAvatar(from: employee.avatarUrl) {
-                await MainActor.run {
-                    cell.cellImage.image = image
-                }
-            }
-        }
+        cell.employeeModel = presenter.getEmployee(for: indexPath) 
 
         return cell
     }
@@ -88,7 +58,7 @@ final class EmployeeListTableVC: UITableViewController {
 //MARK: - private func
 
 extension EmployeeListTableVC {
-    func setupSearchController() {
+    private func setupSearchController() {
         searchController.searchBar.showsBookmarkButton = true
         searchController.searchBar.setImage(
             UIImage(systemName: "list.bullet.indent"),
@@ -104,7 +74,26 @@ extension EmployeeListTableVC {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    func fetchEmployeeData() {
+    private func setupTableView() {
+        tableView.register(
+            UINib(
+                nibName: "EmployeeTableViewCell",
+                bundle: nil
+            ),
+            forCellReuseIdentifier: "employeeCellID"
+        )
+        
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
+    }
+    
+    @objc func refresh() {
+        refreshControl?.endRefreshing()
+        presenter.fetachEmployeeData()
+    }
+    
+    private func fetchEmployeeData() {
         presenter.fetachEmployeeData()
     }
 }
@@ -129,8 +118,9 @@ extension EmployeeListTableVC: UISearchBarDelegate {
 
 extension EmployeeListTableVC: EmployeeListTableViewProtocol {
     func refreshEmployeeList() {
+        cellCount = presenter.getEmployeeCount()
+        refreshControl?.endRefreshing()
         tableView.reloadData()
-        print(DataManager.shared.employees.count)
     }
 }
 
