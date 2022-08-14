@@ -19,9 +19,10 @@
 		6A3483A928A4315C008FA1AA /* EmployeeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483A828A4315C008FA1AA /* EmployeeModel.swift */; };
 		6A3483AB28A43317008FA1AA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483AA28A43317008FA1AA /* NetworkManager.swift */; };
 		6A3483AE28A4374A008FA1AA /* EmployeeListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */; };
-		6A97D84B28A524900092F781 /* EmployeeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D84928A524900092F781 /* EmployeeTableViewCell.swift */; };
-		6A97D84C28A524900092F781 /* EmployeeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A97D84A28A524900092F781 /* EmployeeTableViewCell.xib */; };
-		6A97D84E28A5444C0092F781 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D84D28A5444C0092F781 /* DataManager.swift */; };
+		6A97D84B28A524900092F781 /* TableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D84928A524900092F781 /* TableCellView.swift */; };
+		6A97D84C28A524900092F781 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A97D84A28A524900092F781 /* TableViewCell.xib */; };
+		6A97D85228A989660092F781 /* TableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D85128A989660092F781 /* TableCellViewModel.swift */; };
+		6A97D85428A996870092F781 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D85328A996870092F781 /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,9 +59,10 @@
 		6A3483A828A4315C008FA1AA /* EmployeeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeModel.swift; sourceTree = "<group>"; };
 		6A3483AA28A43317008FA1AA /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListPresenter.swift; sourceTree = "<group>"; };
-		6A97D84928A524900092F781 /* EmployeeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeTableViewCell.swift; sourceTree = "<group>"; };
-		6A97D84A28A524900092F781 /* EmployeeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmployeeTableViewCell.xib; sourceTree = "<group>"; };
-		6A97D84D28A5444C0092F781 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		6A97D84928A524900092F781 /* TableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellView.swift; sourceTree = "<group>"; };
+		6A97D84A28A524900092F781 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		6A97D85128A989660092F781 /* TableCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellViewModel.swift; sourceTree = "<group>"; };
+		6A97D85328A996870092F781 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +115,6 @@
 			children = (
 				6A34837528A405E2008FA1AA /* AppDelegate.swift */,
 				6A34837728A405E2008FA1AA /* SceneDelegate.swift */,
-				6A3483A828A4315C008FA1AA /* EmployeeModel.swift */,
 				6A3483AC28A433A4008FA1AA /* Service Layer */,
 				6A3483A728A4310C008FA1AA /* EmloyeeList */,
 				6A34837B28A405E2008FA1AA /* Main.storyboard */,
@@ -144,9 +145,10 @@
 		6A3483A728A4310C008FA1AA /* EmloyeeList */ = {
 			isa = PBXGroup;
 			children = (
+				6A3483A828A4315C008FA1AA /* EmployeeModel.swift */,
 				6A3483A528A426D5008FA1AA /* EmployeeListTableVC.swift */,
 				6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */,
-				6A3483B328A522BE008FA1AA /* TableViewCell */,
+				6A3483B328A522BE008FA1AA /* TableCell */,
 			);
 			path = EmloyeeList;
 			sourceTree = "<group>";
@@ -154,19 +156,20 @@
 		6A3483AC28A433A4008FA1AA /* Service Layer */ = {
 			isa = PBXGroup;
 			children = (
+				6A97D85328A996870092F781 /* ImageLoader.swift */,
 				6A3483AA28A43317008FA1AA /* NetworkManager.swift */,
-				6A97D84D28A5444C0092F781 /* DataManager.swift */,
 			);
 			path = "Service Layer";
 			sourceTree = "<group>";
 		};
-		6A3483B328A522BE008FA1AA /* TableViewCell */ = {
+		6A3483B328A522BE008FA1AA /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
-				6A97D84928A524900092F781 /* EmployeeTableViewCell.swift */,
-				6A97D84A28A524900092F781 /* EmployeeTableViewCell.xib */,
+				6A97D84928A524900092F781 /* TableCellView.swift */,
+				6A97D85128A989660092F781 /* TableCellViewModel.swift */,
+				6A97D84A28A524900092F781 /* TableViewCell.xib */,
 			);
-			path = TableViewCell;
+			path = TableCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,7 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A34838228A405E3008FA1AA /* LaunchScreen.storyboard in Resources */,
-				6A97D84C28A524900092F781 /* EmployeeTableViewCell.xib in Resources */,
+				6A97D84C28A524900092F781 /* TableViewCell.xib in Resources */,
 				6A34837F28A405E3008FA1AA /* Assets.xcassets in Resources */,
 				6A34837D28A405E2008FA1AA /* Main.storyboard in Resources */,
 			);
@@ -301,9 +304,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A97D85228A989660092F781 /* TableCellViewModel.swift in Sources */,
 				6A3483A628A426D5008FA1AA /* EmployeeListTableVC.swift in Sources */,
-				6A97D84E28A5444C0092F781 /* DataManager.swift in Sources */,
-				6A97D84B28A524900092F781 /* EmployeeTableViewCell.swift in Sources */,
+				6A97D85428A996870092F781 /* ImageLoader.swift in Sources */,
+				6A97D84B28A524900092F781 /* TableCellView.swift in Sources */,
 				6A34837628A405E2008FA1AA /* AppDelegate.swift in Sources */,
 				6A3483AB28A43317008FA1AA /* NetworkManager.swift in Sources */,
 				6A34837828A405E2008FA1AA /* SceneDelegate.swift in Sources */,

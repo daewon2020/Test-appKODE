@@ -15,9 +15,12 @@ final class NetworkManager {
     
     func fetchEmployeeData(from url: String) async -> [Employee] {
         guard let url = URL(string: url) else { return [] }
+        var request = URLRequest(url: url)
+        request.addValue("dynamic=true", forHTTPHeaderField: "Prefer")
+        //request.addValue("example=success", forHTTPHeaderField: "Prefer")
         
         do {
-            let data = try await URLSession.shared.data(from: url)
+            let data = try await URLSession.shared.data(for: request)
             let items = try JSONDecoder().decode(Items.self, from: data.0)
             let employees = items.items.map { $0 }
             
@@ -29,13 +32,11 @@ final class NetworkManager {
         }
     }
     
-    func fetchEmployeeAvatar(from url: String) async -> UIImage? {
+    func fetchEmployeeAvatar(from url: String) async -> Data? {
         guard let url = URL(string: url) else { return nil }
         
         do {
-            let data = try await URLSession.shared.data(from: url)
-            guard let image = UIImage(data: data.0) else { return nil }
-            return image
+            return try await URLSession.shared.data(from: url).0
         } catch {
             print(error.localizedDescription)
             return nil

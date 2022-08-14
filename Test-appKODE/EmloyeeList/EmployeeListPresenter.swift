@@ -6,36 +6,71 @@
 //
 
 import Foundation
+import UIKit
 
 protocol EmploeeListPresenterProtocol: AnyObject {
     init(view: EmployeeListTableViewProtocol)
-    func fetachEmployeeData()
-    func getEmployeeCount() -> Int
-    func getEmployee(for indexPath: IndexPath) -> Employee?
+    func fetchEmployeeData()
+    func showEmployeeListFiltered(for text: String)
+    func showEmployeeListWithoutFilter()
+    func viewDidLoad()
 }
 
 class EmploeeListPresenter: EmploeeListPresenterProtocol {
     unowned let view: EmployeeListTableViewProtocol
     
+    private let url = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
+    private var employees = [Employee]()
+    private var employeesFiltered = [Employee]()
+    
     required init(view: EmployeeListTableViewProtocol) {
         self.view = view
     }
     
-    func getEmployeeCount() -> Int {
-        DataManager.shared.employees.count
+    func viewDidLoad() {
+        fetchEmployeeData()
     }
     
-    func getEmployee(for indexPath: IndexPath) -> Employee? {
-        getEmployeeCount() == 0 ? nil : DataManager.shared.employees[indexPath.row]
+    func showEmployeeListWithoutFilter() {
+        let section = SectionCellViewModel()
+        employees.forEach { emploee in
+            section.rows.append(TableViewCellModel(employess: emploee))
+        }
+        view.reloadEmployeeList(for: section)
     }
     
-   @MainActor func fetachEmployeeData(){
-       DataManager.shared.clearData()
-       Task {
-           sleep(2)
-           await DataManager.shared.fetchEmploees()
-           view.refreshEmployeeList()
-       }
+    func showEmployeeListFiltered(for text: String) {
+        let section = SectionCellViewModel()
+        employeesFiltered = employees.filter { $0.fullName.lowercased().contains(text) }
+        print(employeesFiltered.count)
+        employeesFiltered.forEach { emploee in
+            section.rows.append(TableViewCellModel(employess: emploee))
+        }
+        view.reloadEmployeeListSorted(for: section)
+    }
+    
+    func fetchEmployeeData() {
+        clearData()
+        Task {
+            let section = SectionCellViewModel()
+            
+            employees = await NetworkManager.shared.fetchEmployeeData(from: url)
+            employees.forEach { emploee in
+                section.rows.append(TableViewCellModel(employess: emploee))
+            }
+            await MainActor.run {
+                view.reloadEmployeeList(for: section)
+            }
+        }
+    }
+}
+
+//MARK: - private func
+
+extension EmploeeListPresenter {
+    private func clearData() {
+        employees.removeAll()
+        ImageLoader.shared.clearCache()
     }
 }
 

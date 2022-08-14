@@ -7,7 +7,11 @@
 
 import UIKit
 
-class EmployeeTableViewCell: UITableViewCell {
+protocol TableCellViewProtocol {
+    var viewModel: TableViewCellModel { get set }
+}
+
+class TableCellView: UITableViewCell {
 
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var cellMainText: UILabel!
@@ -16,16 +20,16 @@ class EmployeeTableViewCell: UITableViewCell {
     private let startColor = CGColor(red: 0.955, green: 0.955, blue: 0.965, alpha: 1.0)
     private let endColor = CGColor(red: 0.979, green: 0.981, blue: 0.981, alpha: 1.0)
     
-    var employeeModel: Employee! {
+    var viewModel: TableViewCellModelProtocol! {
         didSet {
             updateView()
         }
     }
     
-    func updateView() {
+    private func updateView() {
         cellImage.layer.cornerRadius = cellImage.frame.height / 2
         
-        if employeeModel == nil {
+        if viewModel == nil {
             let cellSubtitleFrame = CGRect(
                 x: 0,
                 y: 0,
@@ -43,10 +47,10 @@ class EmployeeTableViewCell: UITableViewCell {
             cellSubtitle.layer.sublayers?.removeAll()
             
             let mainText = NSMutableAttributedString()
-            mainText.append(NSAttributedString(string: employeeModel.fullName))
+            mainText.append(NSAttributedString(string: viewModel.employee.fullName))
             mainText.append(
                 NSMutableAttributedString(
-                    string: " " + employeeModel.userTag.lowercased(),
+                    string: " " + viewModel.employee.userTag.lowercased(),
                     attributes: [
                         NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1),
                         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
@@ -54,12 +58,12 @@ class EmployeeTableViewCell: UITableViewCell {
                 )
             )
             cellMainText.attributedText = mainText
-            cellSubtitle.text = employeeModel.position
+            cellSubtitle.text = viewModel.employee.position
             
             Task {
-                if let image = await DataManager.shared.getEmploeeAvatar(from: employeeModel.avatarUrl) {
+                if let avatar = await viewModel.avatar {
                     await MainActor.run {
-                        cellImage.image = image
+                        cellImage.image = avatar
                     }
                 }
             }

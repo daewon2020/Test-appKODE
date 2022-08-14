@@ -8,41 +8,55 @@
 import UIKit
 
 protocol EmployeeListTableViewProtocol: AnyObject {
-    func refreshEmployeeList()
+    func reloadEmployeeList(for section: SectionCellViewModel)
+    func reloadEmployeeListSorted(for section: SectionCellViewModel)
 }
 
 final class EmployeeListTableVC: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var presenter: EmploeeListPresenterProtocol!
-    private var cellCount = 0
+    private var cellCountFiltered = 0
+    private var isFiltered = false
+    private var section = SectionCellViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = EmploeeListPresenter(view: self)
+        presenter.viewDidLoad()
+        
         setupTableView()
         setupSearchController()
-        fetchEmployeeData()
     }
     
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cellCount == 0 ? 10 : cellCount
+        if self.section.rows.count == 0 {
+            return 10
+        }
+        return self.section.rows.count
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: "employeeCellID",
             for: indexPath
-        ) as? EmployeeTableViewCell else { return UITableViewCell() }
+        ) as? TableCellView else { return UITableViewCell() }
         
-        cell.employeeModel = presenter.getEmployee(for: indexPath) 
-
+        if section.rows.count == 0 {
+            cell.viewModel = nil
+            return cell
+        }
+        
+        let viewModel = section.rows[indexPath.row]
+        cell.viewModel = viewModel
+        
         return cell
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        78.0
+        78
     }
     
     // MARK: - Navigation
@@ -77,7 +91,7 @@ extension EmployeeListTableVC {
     private func setupTableView() {
         tableView.register(
             UINib(
-                nibName: "EmployeeTableViewCell",
+                nibName: "TableViewCell",
                 bundle: nil
             ),
             forCellReuseIdentifier: "employeeCellID"
@@ -90,11 +104,7 @@ extension EmployeeListTableVC {
     
     @objc func refresh() {
         refreshControl?.endRefreshing()
-        presenter.fetachEmployeeData()
-    }
-    
-    private func fetchEmployeeData() {
-        presenter.fetachEmployeeData()
+        presenter.fetchEmployeeData()
     }
 }
 
@@ -102,7 +112,13 @@ extension EmployeeListTableVC {
 
 extension EmployeeListTableVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        return
+        if let filterText = searchController.searchBar.text, !filterText.isEmpty {
+            isFiltered = true
+            presenter.showEmployeeListFiltered(for: filterText.lowercased())
+        } else {
+            isFiltered = false
+            presenter.showEmployeeListWithoutFilter()
+        }
     }
 }
 
@@ -117,8 +133,13 @@ extension EmployeeListTableVC: UISearchBarDelegate {
 //MARK: - EmployeeListTableViewProtocol
 
 extension EmployeeListTableVC: EmployeeListTableViewProtocol {
-    func refreshEmployeeList() {
-        cellCount = presenter.getEmployeeCount()
+    func reloadEmployeeListSorted(for section: SectionCellViewModel) {
+        self.section = section
+        tableView.reloadData()
+    }
+    
+    func reloadEmployeeList(for section: SectionCellViewModel) {
+        self.section = section
         refreshControl?.endRefreshing()
         tableView.reloadData()
     }
