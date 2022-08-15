@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,10 +22,94 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="IYF-mE-qpI"/>
+                    <connections>
+                        <segue destination="yof-ku-5uF" kind="presentation" identifier="sortSegue" modalPresentationStyle="formSheet" id="KaE-Sz-vNl"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DOy-Fp-UKe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-451" y="9"/>
+        </scene>
+        <!--Sort View Controller-->
+        <scene sceneID="rMx-Gx-ERB">
+            <objects>
+                <viewController id="yof-ku-5uF" customClass="SortViewController" customModule="Test_appKODE" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gBS-vj-wLR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="NBf-ar-6gH">
+                                <rect key="frame" x="20" y="124" width="374" height="87"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uyz-5k-AIA">
+                                        <rect key="frame" x="0.0" y="0.0" width="151.5" height="33.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radioButtonChecked" translatesAutoresizingMaskIntoConstraints="NO" id="mz1-ih-nVs">
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="33.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="SXJ-W9-d5D"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMg-Hg-eYU">
+                                                <rect key="frame" x="28" y="0.0" width="123.5" height="33.5"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="По алфавиту">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
+                                                </buttonConfiguration>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0JK-mq-CfL">
+                                        <rect key="frame" x="0.0" y="53.5" width="192" height="33.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radioButton" translatesAutoresizingMaskIntoConstraints="NO" id="lPW-cI-Joh">
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="33.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="t1l-Ep-BJ8"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWo-Ix-JON">
+                                                <rect key="frame" x="28" y="0.0" width="164" height="33.5"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="По дню рождения">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
+                                                </buttonConfiguration>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3f-V4-bYD">
+                                <rect key="frame" x="10" y="64" width="37" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="backButtonTapped" destination="yof-ku-5uF" eventType="touchUpInside" id="emX-xd-aGf"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Сортировка" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWv-48-rv3">
+                                <rect key="frame" x="138" y="65" width="138.5" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uQy-0Q-FAN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rWv-48-rv3" firstAttribute="centerX" secondItem="gBS-vj-wLR" secondAttribute="centerX" id="5CI-Ab-tPs"/>
+                            <constraint firstItem="NBf-ar-6gH" firstAttribute="leading" secondItem="uQy-0Q-FAN" secondAttribute="leading" constant="20" id="7oR-ja-bYy"/>
+                            <constraint firstItem="NBf-ar-6gH" firstAttribute="top" secondItem="uQy-0Q-FAN" secondAttribute="top" constant="80" id="E5T-q1-BYP"/>
+                            <constraint firstItem="rWv-48-rv3" firstAttribute="top" secondItem="uQy-0Q-FAN" secondAttribute="top" constant="21" id="a2H-NR-xhi"/>
+                            <constraint firstItem="p3f-V4-bYD" firstAttribute="top" secondItem="gBS-vj-wLR" secondAttribute="topMargin" constant="20" id="gW4-wp-0AJ"/>
+                            <constraint firstItem="p3f-V4-bYD" firstAttribute="leading" secondItem="uQy-0Q-FAN" secondAttribute="leading" constant="10" id="twV-g3-ClI"/>
+                            <constraint firstItem="uQy-0Q-FAN" firstAttribute="trailing" secondItem="NBf-ar-6gH" secondAttribute="trailing" constant="20" id="ybM-xX-CSO"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PLb-C2-5lO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="253.62318840579712" y="8.7053571428571423"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UWf-f1-SOg">
@@ -44,6 +129,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="radioButton" width="22" height="22"/>
+        <image name="radioButtonChecked" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

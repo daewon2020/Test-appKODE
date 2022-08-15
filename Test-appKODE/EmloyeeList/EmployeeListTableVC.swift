@@ -21,6 +21,7 @@ final class EmployeeListTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         presenter = EmploeeListPresenter(view: self)
         presenter.viewDidLoad()
         
@@ -35,7 +36,6 @@ final class EmployeeListTableVC: UITableViewController {
             return 10
         }
         return self.section.rows.count
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,11 +62,8 @@ final class EmployeeListTableVC: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
     }
-    
-    
 }
 
 //MARK: - private func
@@ -126,7 +123,7 @@ extension EmployeeListTableVC: UISearchResultsUpdating {
 
 extension EmployeeListTableVC: UISearchBarDelegate {
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-        print("searchBarBookmarkButtonClicked")
+        performSegue(withIdentifier: "sortSegue", sender: nil)
     }
 }
 
