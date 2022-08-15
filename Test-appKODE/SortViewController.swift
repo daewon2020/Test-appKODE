@@ -9,6 +9,9 @@ import UIKit
 
 class SortViewController: UIViewController {
 
+    @IBOutlet weak var aplhabetButton: UIButton!
+    @IBOutlet weak var birthdayButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,4 +30,23 @@ class SortViewController: UIViewController {
     @IBAction func backButtonTapped() {
         dismiss(animated: true)
     }
+    
+    @IBAction func sortButtonTapped(_ sender: UIButton) {
+        switch sender {
+        case aplhabetButton:
+            aplhabetButton.setImage(UIImage(named: "radioButtonChecked"), for: .normal)
+            birthdayButton.setImage(UIImage(named: "radioButton"), for: .normal)
+        case birthdayButton:
+            aplhabetButton.setImage(UIImage(named: "radioButton"), for: .normal)
+            birthdayButton.setImage(UIImage(named: "radioButtonChecked"), for: .normal)
+        default:
+            return
+        }
+    }
+    
+    @IBAction func alphabetButtonTapped(_ sender: UIButton) {
+        aplhabetButton.setImage(UIImage(named: "radioButtonChecked"), for: .selected)
+        birthdayButton.setImage(UIImage(named: "radioButton"), for: .normal)
+    }
+    
 }

@@ -39,44 +39,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="NBf-ar-6gH">
-                                <rect key="frame" x="20" y="124" width="374" height="87"/>
+                                <rect key="frame" x="20" y="124" width="374" height="88"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uyz-5k-AIA">
-                                        <rect key="frame" x="0.0" y="0.0" width="151.5" height="33.5"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radioButtonChecked" translatesAutoresizingMaskIntoConstraints="NO" id="mz1-ih-nVs">
-                                                <rect key="frame" x="0.0" y="0.0" width="20" height="33.5"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="20" id="SXJ-W9-d5D"/>
-                                                </constraints>
-                                            </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMg-Hg-eYU">
-                                                <rect key="frame" x="28" y="0.0" width="123.5" height="33.5"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="По алфавиту">
-                                                    <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
-                                                </buttonConfiguration>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0JK-mq-CfL">
-                                        <rect key="frame" x="0.0" y="53.5" width="192" height="33.5"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radioButton" translatesAutoresizingMaskIntoConstraints="NO" id="lPW-cI-Joh">
-                                                <rect key="frame" x="0.0" y="0.0" width="20" height="33.5"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="20" id="t1l-Ep-BJ8"/>
-                                                </constraints>
-                                            </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWo-Ix-JON">
-                                                <rect key="frame" x="28" y="0.0" width="164" height="33.5"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="По дню рождения">
-                                                    <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
-                                                </buttonConfiguration>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMg-Hg-eYU">
+                                        <rect key="frame" x="0.0" y="0.0" width="153.5" height="34"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="radioButtonChecked" title="По алфавиту" imagePadding="10">
+                                            <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="alphabetButtonTapped:" destination="yof-ku-5uF" eventType="touchUpInside" id="7H3-sC-ptn"/>
+                                            <action selector="sortButtonTapped:" destination="yof-ku-5uF" eventType="touchUpInside" id="zBD-cR-SP9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWo-Ix-JON">
+                                        <rect key="frame" x="0.0" y="54" width="194" height="34"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="radioButton" title="По дню рождения" imagePadding="10">
+                                            <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="sortButtonTapped:" destination="yof-ku-5uF" eventType="touchUpInside" id="ko0-Fg-oQb"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3f-V4-bYD">
@@ -106,6 +91,10 @@
                             <constraint firstItem="uQy-0Q-FAN" firstAttribute="trailing" secondItem="NBf-ar-6gH" secondAttribute="trailing" constant="20" id="ybM-xX-CSO"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="aplhabetButton" destination="GMg-Hg-eYU" id="vYm-de-Qeh"/>
+                        <outlet property="birthdayButton" destination="qWo-Ix-JON" id="jsr-W3-6BV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PLb-C2-5lO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -130,7 +119,7 @@
     </scenes>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
-        <image name="radioButton" width="22" height="22"/>
+        <image name="radioButton" width="20" height="20"/>
         <image name="radioButtonChecked" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
