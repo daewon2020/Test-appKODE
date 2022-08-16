@@ -12,9 +12,27 @@ class SortViewController: UIViewController {
     @IBOutlet weak var aplhabetButton: UIButton!
     @IBOutlet weak var birthdayButton: UIButton!
     
+    var employeeListPresenter: EmploeeListPresenterProtocol!
+    var sorting: SortList!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        switch sorting {
+        case .name:
+            checkAplhabetButton()
+        case .birthday:
+            checkBirthdayButton()
+        case .none:
+            return
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        employeeListPresenter.sorting = sorting
+        
+        employeeListPresenter.showEmployeeListWithoutFilter()
     }
     
     /*
@@ -34,19 +52,27 @@ class SortViewController: UIViewController {
     @IBAction func sortButtonTapped(_ sender: UIButton) {
         switch sender {
         case aplhabetButton:
-            aplhabetButton.setImage(UIImage(named: "radioButtonChecked"), for: .normal)
-            birthdayButton.setImage(UIImage(named: "radioButton"), for: .normal)
+            checkAplhabetButton()
+            sorting = .name
         case birthdayButton:
-            aplhabetButton.setImage(UIImage(named: "radioButton"), for: .normal)
-            birthdayButton.setImage(UIImage(named: "radioButtonChecked"), for: .normal)
+            checkBirthdayButton()
+            sorting = .birthday
         default:
             return
         }
     }
-    
-    @IBAction func alphabetButtonTapped(_ sender: UIButton) {
-        aplhabetButton.setImage(UIImage(named: "radioButtonChecked"), for: .selected)
+}
+
+//MARK: - private func
+
+extension SortViewController {
+    private func checkAplhabetButton() {
+        aplhabetButton.setImage(UIImage(named: "radioButtonChecked"), for: .normal)
         birthdayButton.setImage(UIImage(named: "radioButton"), for: .normal)
     }
     
+    private func checkBirthdayButton() {
+        aplhabetButton.setImage(UIImage(named: "radioButton"), for: .normal)
+        birthdayButton.setImage(UIImage(named: "radioButtonChecked"), for: .normal)
+    }
 }

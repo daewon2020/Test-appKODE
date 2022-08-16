@@ -41,22 +41,23 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="NBf-ar-6gH">
                                 <rect key="frame" x="20" y="124" width="374" height="88"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMg-Hg-eYU">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMg-Hg-eYU">
                                         <rect key="frame" x="0.0" y="0.0" width="153.5" height="34"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="radioButtonChecked" title="По алфавиту" imagePadding="10">
                                             <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
+                                            <color key="baseForegroundColor" systemColor="labelColor"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="alphabetButtonTapped:" destination="yof-ku-5uF" eventType="touchUpInside" id="7H3-sC-ptn"/>
-                                            <action selector="sortButtonTapped:" destination="yof-ku-5uF" eventType="touchUpInside" id="zBD-cR-SP9"/>
+                                            <action selector="sortButtonTapped:" destination="yof-ku-5uF" eventType="touchUpInside" id="R1N-yI-sYj"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWo-Ix-JON">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWo-Ix-JON">
                                         <rect key="frame" x="0.0" y="54" width="194" height="34"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="radioButton" title="По дню рождения" imagePadding="10">
                                             <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
+                                            <color key="baseForegroundColor" systemColor="labelColor"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="sortButtonTapped:" destination="yof-ku-5uF" eventType="touchUpInside" id="ko0-Fg-oQb"/>
@@ -92,7 +93,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="aplhabetButton" destination="GMg-Hg-eYU" id="vYm-de-Qeh"/>
+                        <outlet property="aplhabetButton" destination="GMg-Hg-eYU" id="d0w-vv-Pzf"/>
                         <outlet property="birthdayButton" destination="qWo-Ix-JON" id="jsr-W3-6BV"/>
                     </connections>
                 </viewController>
@@ -121,6 +122,9 @@
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="radioButton" width="20" height="20"/>
         <image name="radioButtonChecked" width="20" height="20"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

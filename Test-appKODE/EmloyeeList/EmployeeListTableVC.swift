@@ -7,15 +7,20 @@
 
 import UIKit
 
+
+enum SortList {
+    case name
+    case birthday
+}
+
 protocol EmployeeListTableViewProtocol: AnyObject {
     func reloadEmployeeList(for section: SectionCellViewModel)
-    func reloadEmployeeListSorted(for section: SectionCellViewModel)
+    func reloadEmployeeListFiltered(for sectioт: SectionCellViewModel)
 }
 
 final class EmployeeListTableVC: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var presenter: EmploeeListPresenterProtocol!
-    private var cellCountFiltered = 0
     private var isFiltered = false
     private var section = SectionCellViewModel()
     
@@ -23,6 +28,7 @@ final class EmployeeListTableVC: UITableViewController {
         super.viewDidLoad()
         
         presenter = EmploeeListPresenter(view: self)
+        
         presenter.viewDidLoad()
         
         setupTableView()
@@ -62,7 +68,9 @@ final class EmployeeListTableVC: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        guard let sortVC = segue.destination as? SortViewController else { return }
+        sortVC.employeeListPresenter = presenter
+        sortVC.sorting = presenter.sorting
     }
 }
 
@@ -130,15 +138,14 @@ extension EmployeeListTableVC: UISearchBarDelegate {
 //MARK: - EmployeeListTableViewProtocol
 
 extension EmployeeListTableVC: EmployeeListTableViewProtocol {
-    func reloadEmployeeListSorted(for section: SectionCellViewModel) {
+    func reloadEmployeeListFiltered(for section: SectionCellViewModel) {
         self.section = section
         tableView.reloadData()
     }
-    
+
     func reloadEmployeeList(for section: SectionCellViewModel) {
         self.section = section
         refreshControl?.endRefreshing()
         tableView.reloadData()
     }
 }
-

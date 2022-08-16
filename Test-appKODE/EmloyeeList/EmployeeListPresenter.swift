@@ -10,6 +10,8 @@ import UIKit
 
 protocol EmploeeListPresenterProtocol: AnyObject {
     init(view: EmployeeListTableViewProtocol)
+    var sorting: SortList { get set }
+    var isFiltered: Bool { get set }
     func fetchEmployeeData()
     func showEmployeeListFiltered(for text: String)
     func showEmployeeListWithoutFilter()
@@ -22,6 +24,9 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
     private let url = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
     private var employees = [Employee]()
     private var employeesFiltered = [Employee]()
+    
+    var sorting = SortList.name
+    var isFiltered = false
     
     required init(view: EmployeeListTableViewProtocol) {
         self.view = view
@@ -36,6 +41,17 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
         employees.forEach { emploee in
             section.rows.append(TableViewCellModel(employess: emploee))
         }
+        
+        switch sorting {
+        case .name:
+            let sortedSection = section.rows.sorted(
+                by: { $0.employee.fullName < $1.employee.fullName }
+            )
+            section.rows = sortedSection
+        case .birthday:
+            return
+        }
+        
         view.reloadEmployeeList(for: section)
     }
     
@@ -46,7 +62,9 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
         employeesFiltered.forEach { emploee in
             section.rows.append(TableViewCellModel(employess: emploee))
         }
-        view.reloadEmployeeListSorted(for: section)
+        
+        
+        view.reloadEmployeeListFiltered(for: section)
     }
     
     func fetchEmployeeData() {
@@ -59,6 +77,15 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
                 section.rows.append(TableViewCellModel(employess: emploee))
             }
             await MainActor.run {
+                switch sorting {
+                case .name:
+                    let sortedSection = section.rows.sorted(
+                        by: { $0.employee.fullName < $1.employee.fullName }
+                    )
+                    section.rows = sortedSection
+                case .birthday:
+                    return
+                }
                 view.reloadEmployeeList(for: section)
             }
         }
@@ -74,3 +101,9 @@ extension EmploeeListPresenter {
     }
 }
 
+//MARK: - default values for func of EmploeeListPresenterProtocol
+extension EmploeeListPresenterProtocol {
+    func showEmployeeListWithoutFilter(with sorting: SortList? = nil) {
+        return showEmployeeListWithoutFilter(with: sorting)
+    }
+}
