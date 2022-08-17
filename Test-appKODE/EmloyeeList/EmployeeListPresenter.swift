@@ -13,8 +13,7 @@ protocol EmploeeListPresenterProtocol: AnyObject {
     var sorting: SortList { get set }
     var isFiltered: Bool { get set }
     func fetchEmployeeData()
-    func showEmployeeListFiltered(for text: String)
-    func showEmployeeListWithoutFilter()
+    func showEmployeeList(filteredBy text: String?)
     func viewDidLoad()
 }
 
@@ -36,33 +35,49 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
         fetchEmployeeData()
     }
     
-    func showEmployeeListWithoutFilter() {
+    func showEmployeeList(filteredBy text: String?) {
         let section = SectionCellViewModel()
-        employees.forEach { emploee in
-            section.rows.append(TableViewCellModel(employess: emploee))
-        }
         
-        switch sorting {
-        case .name:
-            let sortedSection = section.rows.sorted(
-                by: { $0.employee.fullName < $1.employee.fullName }
-            )
-            section.rows = sortedSection
-        case .birthday:
-            return
+        if let text = text {
+            isFiltered = true
+            employeesFiltered = employees.filter { $0.fullName.lowercased().contains(text) }
+            employeesFiltered.forEach { emploee in
+                section.rows.append(TableViewCellModel(employess: emploee, sorting: sorting))
+                let tableViewCellDodel = TableViewCellModel(employess: emploee, sorting: sorting)
+                if let year = getYearFromString(birtday: emploee.birthday) {
+                    if let index = section.sectionTitles[year] {
+                        section.rowsInSection[index].append(tableViewCellDodel)
+                    } else {
+                        section.sectionTitles[year] = section.sectionTitles.count
+                        section.rowsInSection.append([TableViewCellModelProtocol]())
+                        section.rowsInSection[section.sectionTitles.count - 1].append(tableViewCellDodel)
+                    }
+                }
+            }
+            
+        } else {
+            isFiltered = false
+            employees.forEach { emploee in
+                let tableViewCellModel = TableViewCellModel(employess: emploee, sorting: sorting)
+                section.rows.append(tableViewCellModel)
+                if let year = getYearFromString(birtday: emploee.birthday) {
+                    if let index = section.sectionTitles[year] {
+                        section.rowsInSection[index].append(tableViewCellModel)
+                    } else {
+                        section.sectionTitles[year] = section.sectionTitles.count
+                        section.rowsInSection.append([TableViewCellModelProtocol]())
+                        section.rowsInSection[section.sectionTitles.count - 1].append(tableViewCellModel)
+                    }
+                }
+            }
+            
+            if sorting == .name{
+                let sortedSection = section.rows.sorted(
+                    by: { $0.employee.fullName < $1.employee.fullName }
+                )
+                section.rows = sortedSection
+            }
         }
-        
-        view.reloadEmployeeList(for: section)
-    }
-    
-    func showEmployeeListFiltered(for text: String) {
-        let section = SectionCellViewModel()
-        employeesFiltered = employees.filter { $0.fullName.lowercased().contains(text) }
-        print(employeesFiltered.count)
-        employeesFiltered.forEach { emploee in
-            section.rows.append(TableViewCellModel(employess: emploee))
-        }
-        
         
         view.reloadEmployeeListFiltered(for: section)
     }
@@ -72,10 +87,22 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
         Task {
             let section = SectionCellViewModel()
             
+            
             employees = await NetworkManager.shared.fetchEmployeeData(from: url)
             employees.forEach { emploee in
-                section.rows.append(TableViewCellModel(employess: emploee))
+                let tableViewCellDodel = TableViewCellModel(employess: emploee, sorting: sorting)
+                section.rows.append(tableViewCellDodel)
+                if let year = getYearFromString(birtday: emploee.birthday) {
+                    if let index = section.sectionTitles[year] {
+                        section.rowsInSection[index].append(tableViewCellDodel)
+                    } else {
+                        section.sectionTitles[year] = section.sectionTitles.count
+                        section.rowsInSection.append([TableViewCellModelProtocol]())
+                        section.rowsInSection[section.sectionTitles.count - 1].append(tableViewCellDodel)
+                    }
+                }
             }
+            print(section.sectionTitles)
             await MainActor.run {
                 switch sorting {
                 case .name:
@@ -84,8 +111,10 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
                     )
                     section.rows = sortedSection
                 case .birthday:
-                    return
+                    
+                    print("hello")
                 }
+                
                 view.reloadEmployeeList(for: section)
             }
         }
@@ -97,13 +126,19 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
 extension EmploeeListPresenter {
     private func clearData() {
         employees.removeAll()
+        //sorting = .name
+        //isFiltered = false
         ImageLoader.shared.clearCache()
     }
-}
-
-//MARK: - default values for func of EmploeeListPresenterProtocol
-extension EmploeeListPresenterProtocol {
-    func showEmployeeListWithoutFilter(with sorting: SortList? = nil) {
-        return showEmployeeListWithoutFilter(with: sorting)
+    
+    private func getYearFromString(birtday: String) -> Int? {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.dateFormat = "YYYY-MM-DD"
+        if let date = formatter.date(from: birtday) {
+            formatter.dateFormat = "YYYY"
+            return Int(formatter.string(from: date))
+        }
+        return nil
     }
 }

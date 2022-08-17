@@ -11,10 +11,12 @@ import UIKit
 protocol TableViewCellModelProtocol {
     var employee: Employee { get set }
     var avatar: UIImage? { get async }
+    var sorting: SortList { get set }
 }
 
 class TableViewCellModel: TableViewCellModelProtocol {
     var employee: Employee
+    var sorting: SortList
     
     var avatar: UIImage? {
         get async {
@@ -22,11 +24,14 @@ class TableViewCellModel: TableViewCellModelProtocol {
         }
     }
     
-    init(employess: Employee) {
+    init(employess: Employee, sorting: SortList) {
         self.employee = employess
+        self.sorting = sorting
     }
 }
 
 class SectionCellViewModel {
     var rows = [TableViewCellModelProtocol]()
+    var sectionTitles = [Int: Int]()
+    var rowsInSection = [[TableViewCellModelProtocol]]()
 }

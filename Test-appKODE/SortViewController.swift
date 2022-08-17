@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SortViewController: UIViewController {
+final class SortViewController: UIViewController {
 
     @IBOutlet weak var aplhabetButton: UIButton!
     @IBOutlet weak var birthdayButton: UIButton!
@@ -31,19 +31,8 @@ class SortViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         employeeListPresenter.sorting = sorting
-        
-        employeeListPresenter.showEmployeeListWithoutFilter()
+        employeeListPresenter.showEmployeeList(filteredBy: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     @IBAction func backButtonTapped() {
         dismiss(animated: true)
@@ -54,9 +43,11 @@ class SortViewController: UIViewController {
         case aplhabetButton:
             checkAplhabetButton()
             sorting = .name
+            dismiss(animated: true)
         case birthdayButton:
             checkBirthdayButton()
             sorting = .birthday
+            dismiss(animated: true)
         default:
             return
         }
