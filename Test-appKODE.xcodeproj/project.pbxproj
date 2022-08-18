@@ -24,6 +24,8 @@
 		6A97D85228A989660092F781 /* TableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D85128A989660092F781 /* TableCellViewModel.swift */; };
 		6A97D85428A996870092F781 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D85328A996870092F781 /* ImageLoader.swift */; };
 		6AEB677328AAD06500E20795 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB677228AAD06500E20795 /* SortViewController.swift */; };
+		6AEB677928AEB92200E20795 /* TableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB677828AEB92200E20795 /* TableViewHeader.swift */; };
+		6AEB677B28AEB93F00E20795 /* TableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AEB677A28AEB93F00E20795 /* TableViewHeader.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		6A97D85128A989660092F781 /* TableCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellViewModel.swift; sourceTree = "<group>"; };
 		6A97D85328A996870092F781 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		6AEB677228AAD06500E20795 /* SortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
+		6AEB677828AEB92200E20795 /* TableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeader.swift; sourceTree = "<group>"; };
+		6AEB677A28AEB93F00E20795 /* TableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewHeader.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,8 @@
 				6A97D84928A524900092F781 /* TableCellView.swift */,
 				6A97D85128A989660092F781 /* TableCellViewModel.swift */,
 				6A97D84A28A524900092F781 /* TableViewCell.xib */,
+				6AEB677828AEB92200E20795 /* TableViewHeader.swift */,
+				6AEB677A28AEB93F00E20795 /* TableViewHeader.xib */,
 			);
 			path = TableCell;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 			files = (
 				6A34838228A405E3008FA1AA /* LaunchScreen.storyboard in Resources */,
 				6A97D84C28A524900092F781 /* TableViewCell.xib in Resources */,
+				6AEB677B28AEB93F00E20795 /* TableViewHeader.xib in Resources */,
 				6A34837F28A405E3008FA1AA /* Assets.xcassets in Resources */,
 				6A34837D28A405E2008FA1AA /* Main.storyboard in Resources */,
 			);
@@ -312,6 +319,7 @@
 				6A97D85428A996870092F781 /* ImageLoader.swift in Sources */,
 				6A97D84B28A524900092F781 /* TableCellView.swift in Sources */,
 				6AEB677328AAD06500E20795 /* SortViewController.swift in Sources */,
+				6AEB677928AEB92200E20795 /* TableViewHeader.swift in Sources */,
 				6A34837628A405E2008FA1AA /* AppDelegate.swift in Sources */,
 				6A3483AB28A43317008FA1AA /* NetworkManager.swift in Sources */,
 				6A34837828A405E2008FA1AA /* SceneDelegate.swift in Sources */,

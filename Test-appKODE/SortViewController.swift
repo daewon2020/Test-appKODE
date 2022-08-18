@@ -12,7 +12,7 @@ final class SortViewController: UIViewController {
     @IBOutlet weak var aplhabetButton: UIButton!
     @IBOutlet weak var birthdayButton: UIButton!
     
-    var employeeListPresenter: EmploeeListPresenterProtocol!
+    var employeeListPresenter: employeeListPresenterProtocol!
     var sorting: SortList!
 
     override func viewDidLoad() {

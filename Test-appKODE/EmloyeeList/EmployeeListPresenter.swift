@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol EmploeeListPresenterProtocol: AnyObject {
+protocol employeeListPresenterProtocol: AnyObject {
     init(view: EmployeeListTableViewProtocol)
     var sorting: SortList { get set }
     var isFiltered: Bool { get set }
@@ -17,7 +17,7 @@ protocol EmploeeListPresenterProtocol: AnyObject {
     func viewDidLoad()
 }
 
-class EmploeeListPresenter: EmploeeListPresenterProtocol {
+class employeeListPresenter: employeeListPresenterProtocol {
     unowned let view: EmployeeListTableViewProtocol
     
     private let url = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
@@ -41,42 +41,24 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
         if let text = text {
             isFiltered = true
             employeesFiltered = employees.filter { $0.fullName.lowercased().contains(text) }
-            employeesFiltered.forEach { emploee in
-                section.rows.append(TableViewCellModel(employess: emploee, sorting: sorting))
-                let tableViewCellDodel = TableViewCellModel(employess: emploee, sorting: sorting)
-                if let year = getYearFromString(birtday: emploee.birthday) {
-                    if let index = section.sectionTitles[year] {
-                        section.rowsInSection[index].append(tableViewCellDodel)
-                    } else {
-                        section.sectionTitles[year] = section.sectionTitles.count
-                        section.rowsInSection.append([TableViewCellModelProtocol]())
-                        section.rowsInSection[section.sectionTitles.count - 1].append(tableViewCellDodel)
-                    }
-                }
+            employeesFiltered.forEach { employee in
+                section.rows.append(TableViewCellModel(employess: employee, sorting: sorting))
+                setDataForBithdaySorting(for: employee, in: section)
             }
             
         } else {
             isFiltered = false
-            employees.forEach { emploee in
-                let tableViewCellModel = TableViewCellModel(employess: emploee, sorting: sorting)
-                section.rows.append(tableViewCellModel)
-                if let year = getYearFromString(birtday: emploee.birthday) {
-                    if let index = section.sectionTitles[year] {
-                        section.rowsInSection[index].append(tableViewCellModel)
-                    } else {
-                        section.sectionTitles[year] = section.sectionTitles.count
-                        section.rowsInSection.append([TableViewCellModelProtocol]())
-                        section.rowsInSection[section.sectionTitles.count - 1].append(tableViewCellModel)
-                    }
-                }
+            employees.forEach { employee in
+                section.rows.append(TableViewCellModel(employess: employee, sorting: sorting))
+                setDataForBithdaySorting(for: employee, in: section)
             }
-            
-            if sorting == .name{
-                let sortedSection = section.rows.sorted(
-                    by: { $0.employee.fullName < $1.employee.fullName }
-                )
-                section.rows = sortedSection
-            }
+        }
+        
+        if sorting == .name{
+            let sortedSection = section.rows.sorted(
+                by: { $0.employee.fullName < $1.employee.fullName }
+            )
+            section.rows = sortedSection
         }
         
         view.reloadEmployeeListFiltered(for: section)
@@ -87,20 +69,10 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
         Task {
             let section = SectionCellViewModel()
             
-            
             employees = await NetworkManager.shared.fetchEmployeeData(from: url)
-            employees.forEach { emploee in
-                let tableViewCellDodel = TableViewCellModel(employess: emploee, sorting: sorting)
-                section.rows.append(tableViewCellDodel)
-                if let year = getYearFromString(birtday: emploee.birthday) {
-                    if let index = section.sectionTitles[year] {
-                        section.rowsInSection[index].append(tableViewCellDodel)
-                    } else {
-                        section.sectionTitles[year] = section.sectionTitles.count
-                        section.rowsInSection.append([TableViewCellModelProtocol]())
-                        section.rowsInSection[section.sectionTitles.count - 1].append(tableViewCellDodel)
-                    }
-                }
+            employees.forEach { employee in
+                section.rows.append(TableViewCellModel(employess: employee, sorting: sorting))
+                setDataForBithdaySorting(for: employee, in: section)
             }
             print(section.sectionTitles)
             await MainActor.run {
@@ -123,7 +95,7 @@ class EmploeeListPresenter: EmploeeListPresenterProtocol {
 
 //MARK: - private func
 
-extension EmploeeListPresenter {
+extension employeeListPresenter {
     private func clearData() {
         employees.removeAll()
         //sorting = .name
@@ -140,5 +112,18 @@ extension EmploeeListPresenter {
             return Int(formatter.string(from: date))
         }
         return nil
+    }
+    
+    private func setDataForBithdaySorting(for employee: Employee, in section: SectionCellViewModel) {
+        let tableViewCellModel = TableViewCellModel(employess: employee, sorting: sorting)
+        if let year = getYearFromString(birtday: employee.birthday) {
+            if let index = section.sectionTitles[year] {
+                section.rowsInSection[index].append(tableViewCellModel)
+            } else {
+                section.sectionTitles[year] = section.sectionTitles.count
+                section.rowsInSection.append([TableViewCellModelProtocol]())
+                section.rowsInSection[section.sectionTitles.count - 1].append(tableViewCellModel)
+            }
+        }
     }
 }

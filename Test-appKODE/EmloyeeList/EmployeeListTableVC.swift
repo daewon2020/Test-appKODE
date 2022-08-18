@@ -20,14 +20,14 @@ protocol EmployeeListTableViewProtocol: AnyObject {
 
 final class EmployeeListTableVC: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
-    private var presenter: EmploeeListPresenterProtocol!
+    private var presenter: employeeListPresenterProtocol!
     private var isFiltered = false
     private var section = SectionCellViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter = EmploeeListPresenter(view: self)
+        presenter = employeeListPresenter(view: self)
         
         presenter.viewDidLoad()
         
@@ -37,14 +37,13 @@ final class EmployeeListTableVC: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if self.section.sectionTitles.count > 0 && presenter.sorting == .birthday {
-            let title = self.section.sectionTitles.sorted(by: { $0.key > $1.key})[section].key
-            //print(self.section.sectionTitles.sorted(by: { $0.key > $1.key}))
-            return String(title)
-        }
-        return nil
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if self.section.sectionTitles.count > 0 && presenter.sorting == .birthday {
+//            let title = self.section.sectionTitles.sorted(by: { $0.key > $1.key})[section].key
+//            return String(title)
+//        }
+//        return nil
+//    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         if presenter.sorting == .birthday {
@@ -56,7 +55,6 @@ final class EmployeeListTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if presenter.sorting == .birthday {
             let index = self.section.sectionTitles.sorted(by: { $0.key > $1.key})[section].value
-            //print(self.section.rowsInSection[index].count)
             return self.section.rowsInSection[index].count
             
         }
@@ -95,6 +93,21 @@ final class EmployeeListTableVC: UITableViewController {
         78
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: "TableViewHeader"
+        ) as? TableViewHeader else { return nil}
+        
+        if self.section.sectionTitles.count > 0 && presenter.sorting == .birthday {
+            let title = self.section.sectionTitles.sorted(by: { $0.key > $1.key})[section].key
+            headerView.headerTitle.text = String(title)
+
+            return headerView
+        }
+        
+        return nil
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -125,13 +138,13 @@ extension EmployeeListTableVC {
     
     private func setupTableView() {
         tableView.register(
-            UINib(
-                nibName: "TableViewCell",
-                bundle: nil
-            ),
+            UINib(nibName: "TableViewCell", bundle: nil),
             forCellReuseIdentifier: "employeeCellID"
         )
         
+        tableView.register(
+            UINib(nibName: "TableViewHeader", bundle: nil),
+            forHeaderFooterViewReuseIdentifier: "TableViewHeader")
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         

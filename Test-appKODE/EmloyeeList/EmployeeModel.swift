@@ -22,6 +22,17 @@ struct Employee: Decodable {
     let birthday: String
     let phone: String
     
+    var birthdayShort: String? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "Y-M-d"
+        formatter.timeZone = TimeZone.current
+        if let date = formatter.date(from: birthday) {
+            formatter.dateFormat = "d MMM"
+            return formatter.string(from: date)
+        }
+        return nil
+    }
+    
     var fullName: String {
         firstName + " " + lastName
     }

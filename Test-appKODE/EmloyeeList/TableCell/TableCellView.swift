@@ -16,6 +16,7 @@ class TableCellView: UITableViewCell {
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var cellMainText: UILabel!
     @IBOutlet weak var cellSubtitle: UILabel!
+    @IBOutlet weak var cellBithday: UILabel!
     
     private let startColor = CGColor(red: 0.955, green: 0.955, blue: 0.965, alpha: 1.0)
     private let endColor = CGColor(red: 0.979, green: 0.981, blue: 0.981, alpha: 1.0)
@@ -28,6 +29,7 @@ class TableCellView: UITableViewCell {
     
     private func updateView() {
         cellImage.layer.cornerRadius = cellImage.frame.height / 2
+        cellBithday.isHidden = true
         
         if viewModel == nil {
             let cellSubtitleFrame = CGRect(
@@ -45,6 +47,13 @@ class TableCellView: UITableViewCell {
             cellImage.layer.sublayers?.removeAll()
             cellMainText.layer.sublayers?.removeAll()
             cellSubtitle.layer.sublayers?.removeAll()
+            
+            if viewModel.sorting == .birthday {
+                if let date = viewModel.employee.birthdayShort {
+                    cellBithday.isHidden = false
+                    cellBithday.text = date
+                }
+            }
             
             let mainText = NSMutableAttributedString()
             mainText.append(NSAttributedString(string: viewModel.employee.fullName))
