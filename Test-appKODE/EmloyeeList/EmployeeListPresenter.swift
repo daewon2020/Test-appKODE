@@ -8,8 +8,13 @@
 import Foundation
 import UIKit
 
+enum SortList {
+    case name
+    case birthday
+}
+
 protocol employeeListPresenterProtocol: AnyObject {
-    init(view: EmployeeListTableViewProtocol)
+    init(view: EmployeeListViewControllerProtocol)
     var sorting: SortList { get set }
     var isFiltered: Bool { get set }
     func fetchEmployeeData()
@@ -18,7 +23,7 @@ protocol employeeListPresenterProtocol: AnyObject {
 }
 
 class employeeListPresenter: employeeListPresenterProtocol {
-    unowned let view: EmployeeListTableViewProtocol
+    unowned let view: EmployeeListViewControllerProtocol
     
     private let url = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
     private var employees = [Employee]()
@@ -27,7 +32,7 @@ class employeeListPresenter: employeeListPresenterProtocol {
     var sorting = SortList.name
     var isFiltered = false
     
-    required init(view: EmployeeListTableViewProtocol) {
+    required init(view: EmployeeListViewControllerProtocol) {
         self.view = view
     }
     

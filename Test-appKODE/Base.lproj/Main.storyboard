@@ -8,27 +8,55 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Employee List TableVC-->
-        <scene sceneID="yfD-bg-cb5">
+        <!--Employee List View Controller-->
+        <scene sceneID="vA7-zX-UvI">
             <objects>
-                <tableViewController id="hat-3H-70y" customClass="EmployeeListTableVC" customModule="Test_appKODE" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Mea-ky-TSj">
+                <viewController id="PSj-pL-uuZ" customClass="EmployeeListViewController" customModule="Test_appKODE" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DZj-Lu-iy0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ON2-jJ-a8y">
+                                <rect key="frame" x="20" y="88" width="374" height="40"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="gaD-1w-3p3"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CH0-vZ-hwA">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7YM-R5-aBc">
+                                <rect key="frame" x="0.0" y="148" width="414" height="714"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ctt-ML-ZT7"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="hat-3H-70y" id="K99-w0-pir"/>
-                            <outlet property="delegate" destination="hat-3H-70y" id="U9a-Ou-CVR"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="IYF-mE-qpI"/>
+                        <constraints>
+                            <constraint firstItem="7YM-R5-aBc" firstAttribute="leading" secondItem="Ctt-ML-ZT7" secondAttribute="leading" id="4pM-fj-BeJ"/>
+                            <constraint firstItem="Ctt-ML-ZT7" firstAttribute="bottom" secondItem="7YM-R5-aBc" secondAttribute="bottom" id="7eW-E6-DlL"/>
+                            <constraint firstItem="ON2-jJ-a8y" firstAttribute="leading" secondItem="Ctt-ML-ZT7" secondAttribute="leading" constant="20" id="Aub-h5-ghF"/>
+                            <constraint firstItem="ON2-jJ-a8y" firstAttribute="top" secondItem="Ctt-ML-ZT7" secondAttribute="top" id="OYd-29-JmW"/>
+                            <constraint firstItem="Ctt-ML-ZT7" firstAttribute="trailing" secondItem="7YM-R5-aBc" secondAttribute="trailing" id="eu2-ZI-kVg"/>
+                            <constraint firstItem="7YM-R5-aBc" firstAttribute="top" secondItem="ON2-jJ-a8y" secondAttribute="bottom" constant="20" id="gtM-wa-mnG"/>
+                            <constraint firstItem="Ctt-ML-ZT7" firstAttribute="trailing" secondItem="ON2-jJ-a8y" secondAttribute="trailing" constant="20" id="xrG-QZ-Fdk"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="aQP-UY-Dne"/>
                     <connections>
-                        <segue destination="yof-ku-5uF" kind="presentation" identifier="sortSegue" modalPresentationStyle="formSheet" id="KaE-Sz-vNl"/>
+                        <outlet property="employeeTableView" destination="7YM-R5-aBc" id="zDN-1V-oXz"/>
+                        <outlet property="tabCollectionView" destination="ON2-jJ-a8y" id="0hh-1h-t74"/>
+                        <segue destination="yof-ku-5uF" kind="presentation" identifier="sortSegue" id="3V2-qI-uIt"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DOy-Fp-UKe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RIm-Pa-FNW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-451" y="9"/>
+            <point key="canvasLocation" x="-543" y="9"/>
         </scene>
         <!--Sort View Controller-->
         <scene sceneID="rMx-Gx-ERB">
@@ -104,16 +132,16 @@
         <!--Navigation Controller-->
         <scene sceneID="UWf-f1-SOg">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tmq-IH-0uq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="StE-HM-CxS" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6Dq-aD-HKG">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="hat-3H-70y" kind="relationship" relationship="rootViewController" id="AQT-7l-N0Q"/>
+                        <segue destination="PSj-pL-uuZ" kind="relationship" relationship="rootViewController" id="Vnc-Ul-Eyn"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tmq-IH-0uq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1340" y="9"/>
         </scene>

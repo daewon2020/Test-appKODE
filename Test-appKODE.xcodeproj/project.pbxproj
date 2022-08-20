@@ -15,10 +15,10 @@
 		6A34838D28A405E3008FA1AA /* Test_appKODETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A34838C28A405E3008FA1AA /* Test_appKODETests.swift */; };
 		6A34839728A405E3008FA1AA /* Test_appKODEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A34839628A405E3008FA1AA /* Test_appKODEUITests.swift */; };
 		6A34839928A405E3008FA1AA /* Test_appKODEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A34839828A405E3008FA1AA /* Test_appKODEUITestsLaunchTests.swift */; };
-		6A3483A628A426D5008FA1AA /* EmployeeListTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483A528A426D5008FA1AA /* EmployeeListTableVC.swift */; };
 		6A3483A928A4315C008FA1AA /* EmployeeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483A828A4315C008FA1AA /* EmployeeModel.swift */; };
 		6A3483AB28A43317008FA1AA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483AA28A43317008FA1AA /* NetworkManager.swift */; };
 		6A3483AE28A4374A008FA1AA /* EmployeeListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */; };
+		6A6BA3E428B0DA2100946B6B /* TabCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A6BA3E328B0DA2100946B6B /* TabCollectionViewCell.xib */; };
 		6A97D84B28A524900092F781 /* TableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D84928A524900092F781 /* TableCellView.swift */; };
 		6A97D84C28A524900092F781 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A97D84A28A524900092F781 /* TableViewCell.xib */; };
 		6A97D85228A989660092F781 /* TableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97D85128A989660092F781 /* TableCellViewModel.swift */; };
@@ -26,6 +26,8 @@
 		6AEB677328AAD06500E20795 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB677228AAD06500E20795 /* SortViewController.swift */; };
 		6AEB677928AEB92200E20795 /* TableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB677828AEB92200E20795 /* TableViewHeader.swift */; };
 		6AEB677B28AEB93F00E20795 /* TableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AEB677A28AEB93F00E20795 /* TableViewHeader.xib */; };
+		6AEB677F28B0C85500E20795 /* EmployeeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB677E28B0C85500E20795 /* EmployeeListViewController.swift */; };
+		6AEB678228B0D49800E20795 /* TabCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB678028B0D49800E20795 /* TabCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,10 +60,10 @@
 		6A34839228A405E3008FA1AA /* Test-appKODEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Test-appKODEUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A34839628A405E3008FA1AA /* Test_appKODEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_appKODEUITests.swift; sourceTree = "<group>"; };
 		6A34839828A405E3008FA1AA /* Test_appKODEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_appKODEUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		6A3483A528A426D5008FA1AA /* EmployeeListTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListTableVC.swift; sourceTree = "<group>"; };
 		6A3483A828A4315C008FA1AA /* EmployeeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeModel.swift; sourceTree = "<group>"; };
 		6A3483AA28A43317008FA1AA /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListPresenter.swift; sourceTree = "<group>"; };
+		6A6BA3E328B0DA2100946B6B /* TabCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabCollectionViewCell.xib; sourceTree = "<group>"; };
 		6A97D84928A524900092F781 /* TableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellView.swift; sourceTree = "<group>"; };
 		6A97D84A28A524900092F781 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		6A97D85128A989660092F781 /* TableCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellViewModel.swift; sourceTree = "<group>"; };
@@ -69,6 +71,8 @@
 		6AEB677228AAD06500E20795 /* SortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		6AEB677828AEB92200E20795 /* TableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeader.swift; sourceTree = "<group>"; };
 		6AEB677A28AEB93F00E20795 /* TableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewHeader.xib; sourceTree = "<group>"; };
+		6AEB677E28B0C85500E20795 /* EmployeeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeListViewController.swift; sourceTree = "<group>"; };
+		6AEB678028B0D49800E20795 /* TabCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,9 +157,10 @@
 			isa = PBXGroup;
 			children = (
 				6A3483A828A4315C008FA1AA /* EmployeeModel.swift */,
-				6A3483A528A426D5008FA1AA /* EmployeeListTableVC.swift */,
+				6AEB677E28B0C85500E20795 /* EmployeeListViewController.swift */,
 				6A3483AD28A4374A008FA1AA /* EmployeeListPresenter.swift */,
 				6A3483B328A522BE008FA1AA /* TableCell */,
+				6AEB678428B0D8F000E20795 /* TabCollectionViewCell */,
 			);
 			path = EmloyeeList;
 			sourceTree = "<group>";
@@ -179,6 +184,15 @@
 				6AEB677A28AEB93F00E20795 /* TableViewHeader.xib */,
 			);
 			path = TableCell;
+			sourceTree = "<group>";
+		};
+		6AEB678428B0D8F000E20795 /* TabCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6AEB678028B0D49800E20795 /* TabCollectionViewCell.swift */,
+				6A6BA3E328B0DA2100946B6B /* TabCollectionViewCell.xib */,
+			);
+			path = TabCollectionViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,6 +299,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A6BA3E428B0DA2100946B6B /* TabCollectionViewCell.xib in Resources */,
 				6A34838228A405E3008FA1AA /* LaunchScreen.storyboard in Resources */,
 				6A97D84C28A524900092F781 /* TableViewCell.xib in Resources */,
 				6AEB677B28AEB93F00E20795 /* TableViewHeader.xib in Resources */,
@@ -315,8 +330,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A97D85228A989660092F781 /* TableCellViewModel.swift in Sources */,
-				6A3483A628A426D5008FA1AA /* EmployeeListTableVC.swift in Sources */,
 				6A97D85428A996870092F781 /* ImageLoader.swift in Sources */,
+				6AEB678228B0D49800E20795 /* TabCollectionViewCell.swift in Sources */,
 				6A97D84B28A524900092F781 /* TableCellView.swift in Sources */,
 				6AEB677328AAD06500E20795 /* SortViewController.swift in Sources */,
 				6AEB677928AEB92200E20795 /* TableViewHeader.swift in Sources */,
@@ -324,6 +339,7 @@
 				6A3483AB28A43317008FA1AA /* NetworkManager.swift in Sources */,
 				6A34837828A405E2008FA1AA /* SceneDelegate.swift in Sources */,
 				6A3483AE28A4374A008FA1AA /* EmployeeListPresenter.swift in Sources */,
+				6AEB677F28B0C85500E20795 /* EmployeeListViewController.swift in Sources */,
 				6A3483A928A4315C008FA1AA /* EmployeeModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
