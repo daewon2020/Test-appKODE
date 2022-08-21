@@ -15,23 +15,35 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dds-n6-IFs">
-                    <rect key="frame" x="29" y="9.5" width="42" height="21"/>
+                    <rect key="frame" x="29" y="3.5" width="42" height="33"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJq-xz-V75">
+                    <rect key="frame" x="0.0" y="38" width="100" height="2"/>
+                    <color key="backgroundColor" red="0.396078431372549" green="0.20392156862745098" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="jXT-Xi-erw"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="pJq-xz-V75" secondAttribute="bottom" id="AJV-01-nZZ"/>
+                <constraint firstItem="pJq-xz-V75" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JAG-kM-brI"/>
                 <constraint firstItem="dds-n6-IFs" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="UtQ-Wl-GZs"/>
+                <constraint firstItem="pJq-xz-V75" firstAttribute="top" secondItem="dds-n6-IFs" secondAttribute="bottom" constant="1.5" id="W31-16-MR5"/>
                 <constraint firstItem="dds-n6-IFs" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="w9d-Dz-uND"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="pJq-xz-V75" secondAttribute="trailing" id="zrv-cw-W2G"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="tabBottomStroke" destination="pJq-xz-V75" id="wnB-VR-9Sv"/>
                 <outlet property="tabTitle" destination="dds-n6-IFs" id="duI-ng-poW"/>
             </connections>
-            <point key="canvasLocation" x="139" y="88"/>
+            <point key="canvasLocation" x="130" y="80"/>
         </view>
     </objects>
     <resources>

@@ -8,8 +8,8 @@
 import UIKit
 
 protocol EmployeeListViewControllerProtocol: AnyObject {
-    func reloadEmployeeList(for section: SectionCellViewModel)
-    func reloadEmployeeListFiltered(for sectioт: SectionCellViewModel)
+    func reloadEmployeeListFiltered(for section: SectionCellViewModel)
+    func setDepartamentList(_ departamentList: [String])
 }
 
 class EmployeeListViewController: UIViewController {
@@ -21,6 +21,7 @@ class EmployeeListViewController: UIViewController {
     private var presenter: employeeListPresenterProtocol!
     private var isFiltered = false
     private var section = SectionCellViewModel()
+    private var departaments = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +87,6 @@ extension EmployeeListViewController: UITableViewDataSource {
         if presenter.sorting == .birthday {
             let index = self.section.sectionTitles.sorted(by: { $0.key > $1.key})[section].value
             return self.section.rowsInSection[index].count
-            
         }
         
         if self.section.rows.count == 0 {
@@ -124,11 +124,12 @@ extension EmployeeListViewController: UITableViewDataSource {
 
 extension EmployeeListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        presenter.departamentCellDidTapped(at: indexPath)
+        tabCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: Int.random(in: 50...200), height: 30)
+        CGSize(width: departaments[indexPath.row].count * 13, height: 30)
     }
 }
 
@@ -136,23 +137,32 @@ extension EmployeeListViewController: UICollectionViewDelegateFlowLayout {
 
 extension EmployeeListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        presenter.departaments.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "cellViewID",
             for: indexPath
         ) as? TabCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.tabTitle.text = "Text"
-        cell.backgroundColor = .cyan
+        if let selectedCell = tabCollectionView.indexPathsForSelectedItems?.first, indexPath.row == selectedCell.row {
+            cell.tabTitle.font = UIFont.boldSystemFont(ofSize: 16)
+            cell.tabBottomStroke.isHidden = false
+        } else {
+            cell.tabTitle.font = UIFont.systemFont(ofSize: 15)
+            cell.tabBottomStroke.isHidden = true
+        }
+        
+        for departament in Departament.allCases {
+            if departament.description == departaments[indexPath.row] {
+                cell.tabTitle.text = departament.description
+            }
+        }
         
         return cell
     }
 }
-
 
 //MARK: - private func
 
@@ -194,12 +204,12 @@ extension EmployeeListViewController {
     private func setupCollectionView() {
         tabCollectionView.dataSource = self
         tabCollectionView.delegate = self
-        
+        tabCollectionView.allowsSelection = true
+        tabCollectionView.allowsMultipleSelection = false
         tabCollectionView.register(
             UINib(nibName: "TabCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "cellViewID"
         )
-        
     }
     
     @objc func refresh() {
@@ -234,12 +244,18 @@ extension EmployeeListViewController: EmployeeListViewControllerProtocol {
     func reloadEmployeeListFiltered(for section: SectionCellViewModel) {
         self.section = section
         employeeTableView.reloadData()
+        tabCollectionView.reloadData()
     }
 
-    func reloadEmployeeList(for section: SectionCellViewModel) {
-        self.section = section
-        employeeTableView.refreshControl?.endRefreshing()
-        employeeTableView.reloadData()
+//    func reloadEmployeeList(for section: SectionCellViewModel) {
+//        self.section = section
+//        employeeTableView.refreshControl?.endRefreshing()
+//        employeeTableView.reloadData()
+//        tabCollectionView.reloadData()
+//    }
+    
+    func setDepartamentList(_ departaments: [String]) {
+        self.departaments = departaments
     }
 }
 

@@ -13,13 +13,52 @@ enum SortList {
     case birthday
 }
 
+enum Departament: String, CaseIterable {
+    case all, android, ios, design, management, qa, back_office,frontend,hr
+    case pr, backend, support, analytics
+    
+    var description: String {
+        switch self {
+        case .all:
+            return "Все"
+        case .android:
+            return "Android"
+        case .ios:
+            return "iOS"
+        case .design:
+            return "Дизайн"
+        case .management:
+            return "Менеджмент"
+        case .qa:
+            return "QA"
+        case .back_office:
+            return"Бэк-офис"
+        case .frontend:
+            return "Frontend"
+        case .hr:
+            return "HR"
+        case .pr:
+            return "PR"
+        case .backend:
+            return "Backend"
+        case .support:
+            return "Техподдержка"
+        case .analytics:
+            return "Аналитика"
+        }
+    }
+}
+
 protocol employeeListPresenterProtocol: AnyObject {
     init(view: EmployeeListViewControllerProtocol)
     var sorting: SortList { get set }
     var isFiltered: Bool { get set }
+    var selectedDepartament: Departament { get }
+    var departaments: [String] { get }
     func fetchEmployeeData()
     func showEmployeeList(filteredBy text: String?)
     func viewDidLoad()
+    func departamentCellDidTapped(at indexPath: IndexPath)
 }
 
 class employeeListPresenter: employeeListPresenterProtocol {
@@ -28,9 +67,13 @@ class employeeListPresenter: employeeListPresenterProtocol {
     private let url = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
     private var employees = [Employee]()
     private var employeesFiltered = [Employee]()
+    private var filterText: String? = nil
     
     var sorting = SortList.name
     var isFiltered = false
+
+    var selectedDepartament = Departament.all
+    var departaments = [String]()
     
     required init(view: EmployeeListViewControllerProtocol) {
         self.view = view
@@ -41,22 +84,27 @@ class employeeListPresenter: employeeListPresenterProtocol {
     }
     
     func showEmployeeList(filteredBy text: String?) {
-        let section = SectionCellViewModel()
+        var section = SectionCellViewModel()
+        var employeesInDepartament = [Employee]()
+        filterText = text
+        
+        employeesFiltered = employees
+        
+        if selectedDepartament != .all {
+            employeesInDepartament = employeesFiltered.filter { $0.department == selectedDepartament.rawValue}
+        } else {
+            employeesInDepartament = employees
+        }
+        
         
         if let text = text {
             isFiltered = true
-            employeesFiltered = employees.filter { $0.fullName.lowercased().contains(text) }
-            employeesFiltered.forEach { employee in
-                section.rows.append(TableViewCellModel(employess: employee, sorting: sorting))
-                setDataForBithdaySorting(for: employee, in: section)
-            }
-            
+            employeesFiltered = employeesInDepartament.filter { $0.fullName.lowercased().contains(text) }
+            section = getSection(from: employeesFiltered)
         } else {
             isFiltered = false
-            employees.forEach { employee in
-                section.rows.append(TableViewCellModel(employess: employee, sorting: sorting))
-                setDataForBithdaySorting(for: employee, in: section)
-            }
+            section = getSection(from: employeesInDepartament)
+            
         }
         
         if sorting == .name{
@@ -72,27 +120,22 @@ class employeeListPresenter: employeeListPresenterProtocol {
     func fetchEmployeeData() {
         clearData()
         Task {
-            let section = SectionCellViewModel()
-            
             employees = await NetworkManager.shared.fetchEmployeeData(from: url)
-            employees.forEach { employee in
-                section.rows.append(TableViewCellModel(employess: employee, sorting: sorting))
-                setDataForBithdaySorting(for: employee, in: section)
+            for departament in Departament.allCases {
+                departaments.append(departament.description)
             }
-            print(section.sectionTitles)
             await MainActor.run {
-                switch sorting {
-                case .name:
-                    let sortedSection = section.rows.sorted(
-                        by: { $0.employee.fullName < $1.employee.fullName }
-                    )
-                    section.rows = sortedSection
-                case .birthday:
-                    
-                    print("hello")
-                }
-                
-                view.reloadEmployeeList(for: section)
+                showEmployeeList(filteredBy: filterText)
+                view.setDepartamentList(departaments)
+            }
+        }
+    }
+    
+    func departamentCellDidTapped(at indexPath: IndexPath) {
+        for departament in Departament.allCases {
+            if  departament.description == departaments[indexPath.row] {
+                selectedDepartament = departament
+                showEmployeeList(filteredBy: filterText)
             }
         }
     }
@@ -103,8 +146,6 @@ class employeeListPresenter: employeeListPresenterProtocol {
 extension employeeListPresenter {
     private func clearData() {
         employees.removeAll()
-        //sorting = .name
-        //isFiltered = false
         ImageLoader.shared.clearCache()
     }
     
@@ -130,5 +171,21 @@ extension employeeListPresenter {
                 section.rowsInSection[section.sectionTitles.count - 1].append(tableViewCellModel)
             }
         }
+    }
+    
+    private func getSection(from employees: [Employee]) -> SectionCellViewModel{
+        let section =  SectionCellViewModel()
+        
+        employees.forEach { employee in
+            section.rows.append(TableViewCellModel(employess: employee, sorting: sorting))
+            setDataForBithdaySorting(for: employee, in: section)
+        }
+        
+        let sortedSection = section.rows.sorted(
+            by: { $0.employee.fullName < $1.employee.fullName }
+        )
+        section.rows = sortedSection
+        
+        return section
     }
 }

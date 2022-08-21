@@ -9,13 +9,10 @@ import UIKit
 
 class TabCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tabTitle: UILabel!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    @IBOutlet weak var tabBottomStroke: UIView!
+
+    override func prepareForReuse() {
+        tabBottomStroke.isHidden = true
     }
 }
+
