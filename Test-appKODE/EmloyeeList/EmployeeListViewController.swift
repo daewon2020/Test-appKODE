@@ -42,9 +42,15 @@ class EmployeeListViewController: UIViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let sortVC = segue.destination as? SortViewController else { return }
-        sortVC.employeeListPresenter = presenter
-        sortVC.sorting = presenter.sorting
+        if let sortVC = segue.destination as? SortViewController {
+            sortVC.employeeListPresenter = presenter
+            sortVC.sorting = presenter.sorting
+        }
+        
+        if let detailsVC = segue.destination as? EmployeeDetailsViewController {
+            let indexPath = sender as! IndexPath
+            detailsVC.viewModel = section.rows[indexPath.row]
+        }
     }
 }
 
@@ -74,6 +80,11 @@ extension EmployeeListViewController: UITableViewDelegate {
             return 60
         }
         return 0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "employeeDetailsID", sender: indexPath)
     }
     
 }

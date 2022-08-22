@@ -64,8 +64,8 @@ class TableCellView: UITableViewCell {
                 NSMutableAttributedString(
                     string: " " + viewModel.employee.userTag.lowercased(),
                     attributes: [
-                        NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1),
-                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
+                        .foregroundColor: #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1),
+                        .font: UIFont.systemFont(ofSize: 14),
                     ]
                 )
             )
