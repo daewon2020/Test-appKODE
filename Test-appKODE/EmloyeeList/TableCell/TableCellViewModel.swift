@@ -17,7 +17,7 @@ protocol TableViewCellModelProtocol {
 class TableViewCellModel: TableViewCellModelProtocol {
     var employee: Employee
     var sorting: SortList
-    
+
     var avatar: UIImage? {
         get async {
             await ImageLoader.shared.getImageFromCache(for: employee.avatarUrl)

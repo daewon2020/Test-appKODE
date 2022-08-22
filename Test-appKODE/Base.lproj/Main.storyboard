@@ -139,6 +139,46 @@
             </objects>
             <point key="canvasLocation" x="253.62318840579712" y="8.7053571428571423"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="CXp-Nv-rsN">
+            <objects>
+                <viewController id="thn-nC-445" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mCt-4h-FZD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="42y-d0-POm">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifier" translatesAutoresizingMaskIntoConstraints="NO" id="eUU-Ko-TK4">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="7ep-hN-jw4"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z68-v4-KYR">
+                                        <rect key="frame" x="0.0" y="66" width="414" height="796"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aeI-Fs-RDm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="42y-d0-POm" firstAttribute="leading" secondItem="aeI-Fs-RDm" secondAttribute="leading" id="IBH-TJ-1GR"/>
+                            <constraint firstItem="aeI-Fs-RDm" firstAttribute="trailing" secondItem="42y-d0-POm" secondAttribute="trailing" id="ZMg-oj-vYg"/>
+                            <constraint firstItem="42y-d0-POm" firstAttribute="top" secondItem="mCt-4h-FZD" secondAttribute="top" id="aJ0-tT-N23"/>
+                            <constraint firstItem="aeI-Fs-RDm" firstAttribute="bottom" secondItem="42y-d0-POm" secondAttribute="bottom" id="aU7-F5-Zyg"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yFK-xZ-Tjw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="958" y="9"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="UWf-f1-SOg">
             <objects>
@@ -158,6 +198,7 @@
     </scenes>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="magnifier" width="57" height="56"/>
         <image name="radioButton" width="20" height="20"/>
         <image name="radioButtonChecked" width="20" height="20"/>
         <systemColor name="labelColor">

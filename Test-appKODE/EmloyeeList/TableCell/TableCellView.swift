@@ -26,6 +26,9 @@ class TableCellView: UITableViewCell {
             updateView()
         }
     }
+    override func prepareForReuse() {
+        cellImage.image = UIImage(named: "goose")
+    }
     
     private func updateView() {
         cellImage.layer.cornerRadius = cellImage.frame.height / 2

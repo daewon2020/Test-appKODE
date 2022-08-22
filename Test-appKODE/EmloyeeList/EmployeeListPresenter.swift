@@ -95,8 +95,7 @@ class employeeListPresenter: employeeListPresenterProtocol {
         } else {
             employeesInDepartament = employees
         }
-        
-        
+            
         if let text = text {
             isFiltered = true
             employeesFiltered = employeesInDepartament.filter { $0.fullName.lowercased().contains(text) }
@@ -114,7 +113,11 @@ class employeeListPresenter: employeeListPresenterProtocol {
             section.rows = sortedSection
         }
         
-        view.reloadEmployeeListFiltered(for: section)
+        if section.rows.count == 0 {
+            view.showFrendlyMessage()
+        } else {
+            view.reloadEmployeeListFiltered(for: section)
+        }
     }
     
     func fetchEmployeeData() {
@@ -146,6 +149,7 @@ class employeeListPresenter: employeeListPresenterProtocol {
 extension employeeListPresenter {
     private func clearData() {
         employees.removeAll()
+        departaments.removeAll()
         ImageLoader.shared.clearCache()
     }
     
@@ -187,5 +191,40 @@ extension employeeListPresenter {
         section.rows = sortedSection
         
         return section
+    }
+    
+    private func getFrendlyMessage() -> UIView {
+        var imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 56, height: 56))
+        let stackView = UIStackView()
+        let mainLabel = UILabel()
+        let subLabel = UILabel()
+        if let image = UIImage(named: "magnifier") {
+            imageView = UIImageView(image: image)
+        }
+        
+        imageView.contentMode = .scaleAspectFit
+        
+        mainLabel.text = "Мы никого не нашли"
+        mainLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        mainLabel.textAlignment = .center
+        
+        
+        subLabel.text = "Попробуй скорректировать запрос"
+        subLabel.font = UIFont.systemFont(ofSize: 16)
+        subLabel.tintColor = #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1)
+        subLabel.textAlignment = .center
+        
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(mainLabel)
+        stackView.addArrangedSubview(subLabel)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
     }
 }

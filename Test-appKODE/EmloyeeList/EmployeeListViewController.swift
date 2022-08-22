@@ -10,6 +10,7 @@ import UIKit
 protocol EmployeeListViewControllerProtocol: AnyObject {
     func reloadEmployeeListFiltered(for section: SectionCellViewModel)
     func setDepartamentList(_ departamentList: [String])
+    func showFrendlyMessage()
 }
 
 class EmployeeListViewController: UIViewController {
@@ -20,8 +21,11 @@ class EmployeeListViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var presenter: employeeListPresenterProtocol!
     private var isFiltered = false
+    private var frendlyMessageIsShow = false
     private var section = SectionCellViewModel()
     private var departaments = [String]()
+    private var searchFailView = UIStackView()
+    private var selectedCell = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,7 @@ class EmployeeListViewController: UIViewController {
         setupTableView()
         setupCollectionView()
         setupSearchController()
+        createSearchFailView()
     }
     
     // MARK: - Navigation
@@ -58,7 +63,7 @@ extension EmployeeListViewController: UITableViewDelegate {
         if self.section.sectionTitles.count > 0 && presenter.sorting == .birthday {
             let title = self.section.sectionTitles.sorted(by: { $0.key > $1.key})[section].key
             headerView.headerTitle.text = String(title)
-
+            
             return headerView
         }
         return nil
@@ -80,6 +85,7 @@ extension EmployeeListViewController: UITableViewDataSource {
         if presenter.sorting == .birthday {
             return self.section.sectionTitles.count
         }
+        
         return 1
     }
     
@@ -124,10 +130,11 @@ extension EmployeeListViewController: UITableViewDataSource {
 
 extension EmployeeListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedCell = indexPath.row
         presenter.departamentCellDidTapped(at: indexPath)
         tabCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: departaments[indexPath.row].count * 13, height: 30)
     }
@@ -146,11 +153,14 @@ extension EmployeeListViewController: UICollectionViewDataSource {
             for: indexPath
         ) as? TabCollectionViewCell else { return UICollectionViewCell() }
         
-        if let selectedCell = tabCollectionView.indexPathsForSelectedItems?.first, indexPath.row == selectedCell.row {
+        if indexPath.row == selectedCell {
+            self.selectedCell = indexPath.row
             cell.tabTitle.font = UIFont.boldSystemFont(ofSize: 16)
+            cell.tabTitle.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             cell.tabBottomStroke.isHidden = false
         } else {
             cell.tabTitle.font = UIFont.systemFont(ofSize: 15)
+            cell.tabTitle.tintColor = #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1)
             cell.tabBottomStroke.isHidden = true
         }
         
@@ -216,6 +226,47 @@ extension EmployeeListViewController {
         employeeTableView.refreshControl?.endRefreshing()
         presenter.fetchEmployeeData()
     }
+    
+    func createSearchFailView() {
+        var imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 56, height: 56))
+        let mainLabel = UILabel()
+        let subLabel = UILabel()
+        if let image = UIImage(named: "magnifier") {
+            imageView = UIImageView(image: image)
+        }
+        
+        imageView.contentMode = .scaleAspectFit
+        
+        mainLabel.text = "Мы никого не нашли"
+        mainLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        mainLabel.textAlignment = .center
+        
+        
+        subLabel.text = "Попробуй скорректировать запрос"
+        subLabel.font = UIFont.systemFont(ofSize: 16)
+        subLabel.tintColor = #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.6078431373, alpha: 1)
+        subLabel.textAlignment = .center
+        
+        searchFailView.alignment = .fill
+        searchFailView.distribution = .fill
+        searchFailView.axis = .vertical
+        searchFailView.spacing = 10
+        
+        searchFailView.addArrangedSubview(imageView)
+        searchFailView.addArrangedSubview(mainLabel)
+        searchFailView.addArrangedSubview(subLabel)
+        
+        searchFailView.translatesAutoresizingMaskIntoConstraints = false
+        
+        employeeTableView.addSubview(searchFailView)
+        
+        NSLayoutConstraint.activate([
+            searchFailView.centerYAnchor.constraint(equalTo: employeeTableView.centerYAnchor),
+            searchFailView.centerXAnchor.constraint(equalTo: employeeTableView.centerXAnchor),
+        ])
+        
+        searchFailView.isHidden = true
+    }
 }
 
 //MARK: - UISearchResultsUpdating
@@ -242,20 +293,23 @@ extension EmployeeListViewController: UISearchBarDelegate {
 
 extension EmployeeListViewController: EmployeeListViewControllerProtocol {
     func reloadEmployeeListFiltered(for section: SectionCellViewModel) {
+        searchFailView.isHidden = true
+        employeeTableView.dataSource = self
+        
         self.section = section
         employeeTableView.reloadData()
         tabCollectionView.reloadData()
     }
-
-//    func reloadEmployeeList(for section: SectionCellViewModel) {
-//        self.section = section
-//        employeeTableView.refreshControl?.endRefreshing()
-//        employeeTableView.reloadData()
-//        tabCollectionView.reloadData()
-//    }
     
     func setDepartamentList(_ departaments: [String]) {
         self.departaments = departaments
+    }
+    
+    func showFrendlyMessage() {
+        searchFailView.isHidden = false
+        employeeTableView.dataSource = nil
+        employeeTableView.reloadData()
+        tabCollectionView.reloadData()
     }
 }
 
