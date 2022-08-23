@@ -2,8 +2,10 @@
 _Working in progress_
 #### Task text: https://github.com/appKODE/trainee-test-ios#readme
 
-1. Use MVP, MVC patterns
-2. Use async/awiat for concurrency 
+
+1. Used MVP, MVC patterns
+2. Used async/awiat for concurrency 
+3. Used native URLSession for networking
 
 <table>
   <tr>
