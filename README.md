@@ -36,13 +36,12 @@ _Working in progress_
 <table>
   <tr>
      <td>Custom text in alert .actionSheet</td>
-     <td>One more screen</td>
+     <td>Fail loading JSON screen</td>
      <td>One more screen</td>
   </tr>
   <tr>
     <td><img src="https://user-images.githubusercontent.com/56202186/186075779-34f685d6-b6ec-4b7e-81d4-c64c10e56607.jpg"></td>
-    <td></td>
+    <td><img src="https://user-images.githubusercontent.com/56202186/186224209-aad9219d-eeb8-4878-b0a1-b5f1cf7ecc39.jpg"></td>
     <td></td>
   </tr>
  </table>
-
